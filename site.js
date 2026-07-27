@@ -1,5 +1,5 @@
-// Set in Task 4 after Jelle deploys the Apps Script.
-const SCRIPT_URL = "REPLACE_WITH_APPS_SCRIPT_URL";
+// Apps Script web app bound to the "Sudoku boekje interesse" sheet (see README).
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwARIYFsINER5Bg7HqwqnqjzZCW4qQkTIOfpDg4afc7lTtiQJa2E4iYxcX3KEpHlqsw/exec";
 
 const form = document.getElementById("interest-form");
 const address = document.getElementById("address-fields");
