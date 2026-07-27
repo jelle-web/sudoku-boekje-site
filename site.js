@@ -1,0 +1,71 @@
+// Set in Task 4 after Jelle deploys the Apps Script.
+const SCRIPT_URL = "REPLACE_WITH_APPS_SCRIPT_URL";
+
+const form = document.getElementById("interest-form");
+const address = document.getElementById("address-fields");
+const addrInputs = ["street", "postcode", "city"].map((n) => form.elements[n]);
+
+// Address block appears (and becomes required) only for "send it by post".
+form.addEventListener("change", () => {
+  const post = form.elements.delivery.value === "post";
+  address.hidden = !post;
+  addrInputs.forEach((i) => (i.required = post));
+});
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const btn = form.querySelector("button[type=submit]");
+  const data = Object.fromEntries(new FormData(form));
+  data.page_lang = document.documentElement.lang;
+  document.getElementById("form-error").hidden = true;
+  if (data.website) return showThanks(); // honeypot: fake success, send nothing
+  btn.disabled = true;
+  btn.dataset.label = btn.textContent;
+  btn.textContent = "…";
+  try {
+    const res = await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify(data) });
+    const out = await res.json();
+    if (!out.ok) throw new Error("script said not ok");
+    showThanks();
+  } catch {
+    document.getElementById("form-error").hidden = false;
+    btn.disabled = false;
+    btn.textContent = btn.dataset.label;
+  }
+});
+
+function showThanks() {
+  form.hidden = true;
+  document.getElementById("form-thanks").hidden = false;
+  confetti();
+}
+
+function confetti() {
+  const c = document.createElement("canvas");
+  c.className = "confetti";
+  c.width = innerWidth;
+  c.height = innerHeight;
+  document.body.appendChild(c);
+  const ctx = c.getContext("2d");
+  const colors = ["#e74c3c", "#e67e22", "#f1c40f", "#2ecc71", "#3498db", "#9b59b6"];
+  const parts = Array.from({ length: 150 }, () => ({
+    x: c.width / 2, y: c.height * 0.6,
+    vx: (Math.random() - 0.5) * 14, vy: -(Math.random() * 13 + 5),
+    size: Math.random() * 7 + 4, rot: Math.random() * Math.PI,
+    vr: (Math.random() - 0.5) * 0.3,
+    color: colors[(Math.random() * colors.length) | 0],
+  }));
+  const t0 = performance.now();
+  (function frame(t) {
+    ctx.clearRect(0, 0, c.width, c.height);
+    for (const p of parts) {
+      p.vy += 0.25; p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.6);
+      ctx.restore();
+    }
+    if (t - t0 < 3000) requestAnimationFrame(frame);
+    else c.remove();
+  })(t0);
+}
