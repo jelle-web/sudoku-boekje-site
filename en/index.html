@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jelle's sudoku booklet — want one?</title>
+<meta property="og:title" content="Jelle's sudoku booklet">
+<meta property="og:description" content="12 seriously cool sudoku variants, from Donkey to Final Boss. Want one?">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<a class="lang-toggle" href="../">🇳🇱 Nederlands</a>
+
+<header class="cover">
+  <div class="cv-van">Jelle's</div>
+  <div class="cv-big">SUDO<span class="o">KU</span></div>
+  <div class="cv-boekje">booklet</div>
+  <div class="cv-stars">★★★★★</div>
+  <div class="cv-sub">12 variants · from Donkey to Final Boss</div>
+  <div class="cv-icons">
+    <img src="../assets/icons/thermo.svg" alt=""><img src="../assets/icons/stip.svg" alt="">
+    <img src="../assets/icons/burger.svg" alt=""><img src="../assets/icons/pijl.svg" alt="">
+    <img src="../assets/icons/kruis.svg" alt="">
+  </div>
+</header>
+<div class="rainbow-rule"></div>
+
+<main>
+  <section class="intro">
+    <!-- JELLE-INTRO-EN: replaced in Task 6, translation of the NL intro -->
+    <p class="placeholder">[intro coming up]</p>
+  </section>
+
+  <section>
+    <figure class="polaroid">
+      <img src="../assets/jelle.jpg" alt="Jelle">
+      <figcaption>the culprit himself</figcaption>
+    </figure>
+  </section>
+
+  <section class="taster">
+    <h2>A little taste</h2>
+    <div class="grids">
+      <img class="tilt-l" src="../assets/grid-1.png" alt="Sudoku variant from the booklet">
+      <img class="tilt-r" src="../assets/grid-2.png" alt="Sudoku variant from the booklet">
+      <img class="tilt-l" src="../assets/grid-3.png" alt="Sudoku variant from the booklet">
+    </div>
+  </section>
+
+  <section class="signup panel">
+    <h2>Want one?</h2>
+    <form id="interest-form">
+      <label>Name <span class="req">*</span>
+        <input name="name" required autocomplete="name" placeholder="Your name">
+      </label>
+      <label>Email or phone number <span class="opt">(optional)</span>
+        <input name="contact" autocomplete="email"
+               placeholder="so I can ping you when it's ready">
+      </label>
+      <fieldset>
+        <legend>Which language do you want?</legend>
+        <label class="choice"><input type="radio" name="booklet_lang" value="nl"> Nederlands</label>
+        <label class="choice"><input type="radio" name="booklet_lang" value="en" checked> English</label>
+      </fieldset>
+      <label>How many copies?
+        <input type="number" name="copies" value="1" min="1" max="10">
+      </label>
+      <fieldset>
+        <legend>How do you want to get it?</legend>
+        <label class="choice"><input type="radio" name="delivery" value="post" required>
+          📮 Send it over! <small>(easy peasy, no stress)</small></label>
+        <label class="choice"><input type="radio" name="delivery" value="catch">
+          😎 Don't worry about it, I'll catch it when I see ya</label>
+      </fieldset>
+      <div id="address-fields" hidden>
+        <label>Street + number <input name="street" autocomplete="street-address"></label>
+        <label>Postal code <input name="postcode" autocomplete="postal-code"></label>
+        <label>City <input name="city" autocomplete="address-level2"></label>
+        <label>Country <input name="country" value="Netherlands" autocomplete="country-name"></label>
+      </div>
+      <label>Comment <span class="opt">(optional)</span>
+        <textarea name="comment" rows="3" placeholder="Say anything!"></textarea>
+      </label>
+      <div class="hp" aria-hidden="true">
+        <input name="website" tabindex="-1" autocomplete="off">
+      </div>
+      <button type="submit">Yes please! 🎉</button>
+      <p id="form-error" hidden>Oops, that didn't work. Try again,
+        or just send me a message!</p>
+    </form>
+    <div id="form-thanks" hidden>🎉 Done! You're on the list. Thank you!</div>
+  </section>
+</main>
+
+<footer>Jelle's sudoku booklet · 2026</footer>
+<script src="../site.js"></script>
+</body>
+</html>
