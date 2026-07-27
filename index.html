@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jelle's sudoku-boekje — wil jij er één?</title>
+<meta property="og:title" content="Jelle's sudoku-boekje">
+<meta property="og:description" content="12 kei-gave sudoku-varianten, van Ezel tot Eindbaas. Wil jij er één?">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="lang-toggle" href="en/">🇬🇧 English</a>
+
+<header class="cover">
+  <div class="cv-van">Jelle's</div>
+  <div class="cv-big">SUDO<span class="o">KU</span></div>
+  <div class="cv-boekje">boekje</div>
+  <div class="cv-stars">★★★★★</div>
+  <div class="cv-sub">12 varianten · van Ezel tot Eindbaas</div>
+  <div class="cv-icons">
+    <img src="assets/icons/thermo.svg" alt=""><img src="assets/icons/stip.svg" alt="">
+    <img src="assets/icons/burger.svg" alt=""><img src="assets/icons/pijl.svg" alt="">
+    <img src="assets/icons/kruis.svg" alt="">
+  </div>
+</header>
+<div class="rainbow-rule"></div>
+
+<main>
+  <section class="intro">
+    <!-- JELLE-INTRO-NL: replaced in Task 6, drafted together with Jelle -->
+    <p class="placeholder">[intro volgt]</p>
+  </section>
+
+  <section>
+    <figure class="polaroid">
+      <img src="assets/jelle.jpg" alt="Jelle">
+      <figcaption>de dader zelf</figcaption>
+    </figure>
+  </section>
+
+  <section class="taster">
+    <h2>Een voorproefje</h2>
+    <div class="grids">
+      <img class="tilt-l" src="assets/grid-1.png" alt="Sudoku-variant uit het boekje">
+      <img class="tilt-r" src="assets/grid-2.png" alt="Sudoku-variant uit het boekje">
+      <img class="tilt-l" src="assets/grid-3.png" alt="Sudoku-variant uit het boekje">
+    </div>
+  </section>
+
+  <section class="signup panel">
+    <h2>Wil jij er eentje?</h2>
+    <form id="interest-form">
+      <label>Naam <span class="req">*</span>
+        <input name="name" required autocomplete="name" placeholder="Je naam">
+      </label>
+      <label>Email of telefoonnummer <span class="opt">(optioneel)</span>
+        <input name="contact" autocomplete="email"
+               placeholder="zodat ik je kan pingen als 'ie er is">
+      </label>
+      <fieldset>
+        <legend>Welke taal wil je?</legend>
+        <label class="choice"><input type="radio" name="booklet_lang" value="nl" checked> Nederlands</label>
+        <label class="choice"><input type="radio" name="booklet_lang" value="en"> English</label>
+      </fieldset>
+      <label>Hoeveel exemplaren?
+        <input type="number" name="copies" value="1" min="1" max="10">
+      </label>
+      <fieldset>
+        <legend>Hoe krijg je 'm?</legend>
+        <label class="choice"><input type="radio" name="delivery" value="post" required>
+          📮 Stuur maar op! <small>(easy peasy, geen spang)</small></label>
+        <label class="choice"><input type="radio" name="delivery" value="catch">
+          😎 Maak je niet druk, ik kom 'm wel een keer tegen</label>
+      </fieldset>
+      <div id="address-fields" hidden>
+        <label>Straat + huisnummer <input name="street" autocomplete="street-address"></label>
+        <label>Postcode <input name="postcode" autocomplete="postal-code"></label>
+        <label>Plaats <input name="city" autocomplete="address-level2"></label>
+        <label>Land <input name="country" value="Nederland" autocomplete="country-name"></label>
+      </div>
+      <label>Opmerking <span class="opt">(optioneel)</span>
+        <textarea name="comment" rows="3" placeholder="Zeg het maar!"></textarea>
+      </label>
+      <div class="hp" aria-hidden="true">
+        <input name="website" tabindex="-1" autocomplete="off">
+      </div>
+      <button type="submit">Ja, ik wil! 🎉</button>
+      <p id="form-error" hidden>Oeps, dat ging mis. Probeer het nog eens,
+        of stuur me gewoon even een berichtje!</p>
+    </form>
+    <div id="form-thanks" hidden>🎉 Gelukt! Je staat op de lijst. Dankjewel!</div>
+  </section>
+</main>
+
+<footer>Jelle's sudoku-boekje · 2026</footer>
+<script src="site.js"></script>
+</body>
+</html>
