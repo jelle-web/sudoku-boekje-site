@@ -1,4 +1,4 @@
-// Apps Script web app bound to the "Sudoku boekje interesse" sheet (see README).
+// Standalone Apps Script web app; it addresses the sheet by id (see README).
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwARIYFsINER5Bg7HqwqnqjzZCW4qQkTIOfpDg4afc7lTtiQJa2E4iYxcX3KEpHlqsw/exec";
 
 const form = document.getElementById("interest-form");
