@@ -45,7 +45,7 @@ main{max-width:560px;margin:0 auto;padding:0 20px 60px}
    and then shrinking again when the second column arrives. */
 .grids{display:grid;grid-template-columns:1fr;gap:20px;
   justify-items:center;padding:4px 0 12px}
-.grids img{width:min(260px,74%);background:#fff;padding:8px;
+.grids img{width:min(260px,74%);
   box-shadow:0 5px 14px rgba(42,38,34,.22);transition:transform .25s ease}
 /* One angle per position — update these if the grid count changes. */
 .grids img:nth-child(1){transform:rotate(-5deg) translateX(-5%)}
@@ -62,6 +62,25 @@ main{max-width:560px;margin:0 auto;padding:0 20px 60px}
   .grids img:nth-child(2){transform:rotate(4deg) translateY(-9px)}
   .grids img:nth-child(3){transform:rotate(3deg) translateY(4px)}
   .grids img:nth-child(4){transform:rotate(-4.5deg) translateY(-6px)}
+}
+/* Wide screens only: the text column is capped at 560px, so a laptop leaves
+   ~300px of empty margin either side. Tuck the grids into that margin around the
+   intro, turned harder, overlapping the column edge but stopping inside its
+   padding so no letters end up on top of a grid. The heading goes away since
+   they are decoration here, not a gallery. A phone has no margin to give, so it
+   keeps the stacked version above. 1120px is the width where the outermost
+   rotated corner still clears the viewport edge. */
+@media(min-width:1120px){
+  main{position:relative}
+  .intro p{position:relative;z-index:1}
+  .taster h2{display:none}
+  .taster{margin-top:0}
+  .grids{display:block;padding:0;height:0}
+  .grids img{position:absolute;width:230px;transition:transform .3s ease}
+  .grids img:nth-child(1){top:-8px;   left:-218px; transform:rotate(-11deg)}
+  .grids img:nth-child(2){top:250px;  left:-236px; transform:rotate(7deg)}
+  .grids img:nth-child(3){top:40px;   right:-222px;transform:rotate(9deg)}
+  .grids img:nth-child(4){top:298px;  right:-208px;transform:rotate(-8deg)}
 }
 /* Straighten on hover, so a curious mouse gets a readable grid. Pointer devices
    only: on a phone :hover latches after a tap and the grid stays crooked-fixed. */
