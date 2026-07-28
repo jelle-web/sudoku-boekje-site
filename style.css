@@ -41,11 +41,26 @@ main{max-width:560px;margin:0 auto;padding:0 20px 60px}
 .taster h2::after,.signup h2::after{content:"";display:block;width:90px;
   height:4px;border-radius:2px;margin:8px auto 18px;
   background:linear-gradient(90deg,#e74c3c,#f1c40f,#2ecc71,#3498db,#9b59b6)}
-.grids{display:flex;flex-wrap:wrap;justify-content:center;gap:18px}
-.grids img{width:min(230px,44%);background:#fff;padding:8px;
-  box-shadow:0 4px 12px rgba(42,38,34,.2)}
-.tilt-l{transform:rotate(-2deg)} .tilt-r{transform:rotate(2deg)}
-@media(max-width:520px){.grids img{width:78%}}
+/* Snapshots dropped on a table: every grid sits askew, none the same angle. */
+.grids{display:grid;grid-template-columns:1fr 1fr;gap:20px 12px;
+  justify-items:center;align-items:center;padding:4px 0 12px}
+.grids img{width:min(230px,100%);background:#fff;padding:8px;
+  box-shadow:0 5px 14px rgba(42,38,34,.22);transition:transform .25s ease}
+.grids img:nth-child(1){transform:rotate(-5.5deg) translateY(6px)}
+.grids img:nth-child(2){transform:rotate(4deg) translateY(-9px)}
+.grids img:nth-child(3){transform:rotate(3deg) translateY(4px)}
+.grids img:nth-child(4){transform:rotate(-4.5deg) translateY(-6px)}
+/* Straighten on hover, so a curious mouse gets a readable grid. */
+.grids img:hover{transform:rotate(0) scale(1.03)}
+@media(max-width:520px){
+  .grids{grid-template-columns:1fr;gap:20px}
+  .grids img{width:74%}
+  .grids img:nth-child(1){transform:rotate(-5deg) translateX(-5%)}
+  .grids img:nth-child(2){transform:rotate(4.5deg) translateX(5%)}
+  .grids img:nth-child(3){transform:rotate(3.5deg) translateX(-4%)}
+  .grids img:nth-child(4){transform:rotate(-4.5deg) translateX(4%)}
+}
+@media(prefers-reduced-motion:reduce){.grids img{transition:none}}
 
 .panel{background:var(--panel);border:1.5px solid var(--border);
   border-radius:14px;padding:20px 22px 26px;margin-top:30px}
