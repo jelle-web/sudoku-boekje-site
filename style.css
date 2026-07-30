@@ -236,8 +236,8 @@ button[type=submit]:disabled{opacity:.6;cursor:wait}
 .small-screen{--boom-peak:2.9;--boom-offset:435px}
 /* Both sit a little higher than on a laptop, and the left one stays lower than the
    right so the pair are not level. */
-.small-screen .deco-boom-l{top:37px}
-.small-screen .deco-boom-r{top:62px}
+.small-screen .deco-boom-l{top:31px}
+.small-screen .deco-boom-r{top:56px}
 /* The signup section runs 20% below that: still typeable, less dominant. Scoped
    as a variable so everything in it scales together, and so the shared
    photos-caption below keeps the page-wide factor. Width and offset shrink with
