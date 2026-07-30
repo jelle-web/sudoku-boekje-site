@@ -35,9 +35,10 @@ main{max-width:560px;margin:0 auto;padding:0 20px 60px}
    (grid 1 leans -11deg, grid 3 leans +9deg). The right one is mirrored so the
    pair are not identical twins. The offsets are measured from the centre, so
    both stay clear of the letters at every width. */
-.deco-boom{width:320px}
-.deco-boom-l{top:-34px;left:calc(50% - 480px);transform:rotate(8deg)}
-.deco-boom-r{top:-46px;right:calc(50% - 480px);transform:rotate(-8deg) scaleX(-1)}
+.deco-boom{width:384px}
+/* Offsets grow with the width, so the blasts stay clear of the letters. */
+.deco-boom-l{top:0;left:calc(50% - 544px);transform:rotate(8deg)}
+.deco-boom-r{top:-12px;right:calc(50% - 544px);transform:rotate(-8deg) scaleX(-1)}
 /* Cover text paints over the decoration, plus a halo in the page colour so the
    letters keep their contrast where they cross a photo. Invisible against the
    plain background. */
@@ -48,9 +49,9 @@ main{max-width:560px;margin:0 auto;padding:0 20px 60px}
    top corners and the rainbow still sits centred behind. */
 @media(max-width:560px){
   .deco-rainbow{width:470px;top:-18px;opacity:.45}
-  .deco-boom{width:165px}
-  .deco-boom-l{top:-40px;left:-62px}
-  .deco-boom-r{top:-44px;right:-58px}
+  .deco-boom{width:198px}
+  .deco-boom-l{top:-18px;left:-74px}
+  .deco-boom-r{top:-22px;right:-70px}
 }
 .cv-van{font-size:16px;color:var(--muted);letter-spacing:5px;
         text-transform:uppercase;font-weight:700;margin-bottom:4px}
