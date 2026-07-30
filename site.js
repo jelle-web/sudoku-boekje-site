@@ -1,6 +1,13 @@
 // Standalone Apps Script web app; it addresses the sheet by id (see README).
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwARIYFsINER5Bg7HqwqnqjzZCW4qQkTIOfpDg4afc7lTtiQJa2E4iYxcX3KEpHlqsw/exec";
 
+// The page uses a fixed 1120px viewport so phones get the laptop layout, which
+// means a phone shrinks everything to about a third. Readable enough for text you
+// can pinch-zoom, too small to tap a form. Flagging small physical screens lets
+// the CSS enlarge only the form. screen.width is the device, not the window, so a
+// narrow window on a big monitor is correctly left alone.
+if (screen.width <= 600) document.documentElement.classList.add("small-screen");
+
 const form = document.getElementById("interest-form");
 const address = document.getElementById("address-fields");
 const addrInputs = ["street", "postcode", "city"].map((n) => form.elements[n]);
