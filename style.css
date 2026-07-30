@@ -20,18 +20,19 @@ main{max-width:560px;margin:0 auto;padding:0 20px 60px}
 /* A rainbow rising out of the top-left corner and a comic bang top-right, both
    purely decorative. overflow:hidden on .cover is what crops them to the corner
    and keeps them from widening the page. */
-/* Sat fully in the corners before; now nudged inward so the whole rainbow and
-   the whole bang are visible, cheerfully bad-clipart style. */
-.deco{position:absolute;pointer-events:none;z-index:0}
-.deco-rainbow{width:200px;height:124px;top:24px;left:28px;transform:rotate(-4deg)}
-.deco-boom{width:158px;height:158px;top:12px;right:26px;transform:rotate(9deg)}
+/* Real photos rather than drawings. The bang is a true transparent cutout; the
+   rainbow keeps its sky (a rainbow cannot be cut out — it IS sky) and instead has
+   its edges faded so it melts into the page. */
+.deco{position:absolute;pointer-events:none;z-index:0;height:auto}
+.deco-rainbow{width:230px;top:16px;left:14px;transform:rotate(-3deg)}
+.deco-boom{width:170px;top:6px;right:18px;transform:rotate(6deg)}
 /* Cover text always paints over the decoration, so neither graphic can make the
    wordmark hard to read. */
 .cover > div{position:relative;z-index:1}
 /* A phone cover is nearly all wordmark, so they shrink and hug the edges more. */
 @media(max-width:560px){
-  .deco-rainbow{width:124px;height:77px;top:6px;left:2px}
-  .deco-boom{width:92px;height:92px;top:2px;right:2px}
+  .deco-rainbow{width:138px;top:4px;left:-6px}
+  .deco-boom{width:100px;top:0;right:-4px}
 }
 .cv-van{font-size:16px;color:var(--muted);letter-spacing:5px;
         text-transform:uppercase;font-weight:700;margin-bottom:4px}
