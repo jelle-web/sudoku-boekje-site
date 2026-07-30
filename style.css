@@ -242,8 +242,8 @@ button[type=submit]:disabled{opacity:.6;cursor:wait}
    as a variable so everything in it scales together, and so the shared
    photos-caption below keeps the page-wide factor. Width and offset shrink with
    it, staying centred in the 900px layout. */
-.small-screen .signup{--form-scale:calc(var(--form-scale-base, 1) * 0.8);
-  width:688px;margin-left:-84px;
+.small-screen .signup{--form-scale:calc(var(--form-scale-base, 1) * 0.64);
+  width:550px;margin-left:-15px;
   padding:calc(20px * var(--form-scale)) calc(22px * var(--form-scale))
           calc(26px * var(--form-scale));
   border-radius:calc(14px * var(--form-scale))}
@@ -265,7 +265,7 @@ button[type=submit]:disabled{opacity:.6;cursor:wait}
 .small-screen #form-error{font-size:calc(15px * var(--form-scale))}
 .small-screen #form-thanks{font-size:calc(20px * var(--form-scale));
   padding:calc(26px * var(--form-scale)) 0}
-.small-screen .photos-caption{font-size:calc(14px * var(--form-scale))}
+.small-screen .photos-caption{font-size:calc(14px * var(--form-scale) * 0.8)}
 
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:99}
 footer{text-align:center;color:var(--muted);font-size:13px;padding:26px 0 40px}
