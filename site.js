@@ -59,6 +59,8 @@ form.addEventListener("submit", async (e) => {
 
 function showThanks() {
   form.hidden = true;
+  // "Wil jij er eentje?" is a question they have just answered, so it goes too.
+  form.closest(".signup").querySelector("h2").hidden = true;
   document.getElementById("form-thanks").hidden = false;
   confetti();
 }
@@ -71,7 +73,7 @@ function confetti() {
   document.body.appendChild(c);
   const ctx = c.getContext("2d");
   const colors = ["#e74c3c", "#e67e22", "#f1c40f", "#2ecc71", "#3498db", "#9b59b6"];
-  const parts = Array.from({ length: 150 }, () => ({
+  const parts = Array.from({ length: 300 }, () => ({
     x: c.width / 2, y: c.height * 0.6,
     vx: (Math.random() - 0.5) * 14, vy: -(Math.random() * 13 + 5),
     size: Math.random() * 7 + 4, rot: Math.random() * Math.PI,
