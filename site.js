@@ -16,7 +16,7 @@ function sizeFormForScreen() {
     return;
   }
   const factor = VIEWPORT_WIDTH / Math.max(screen.width, 320);
-  root.style.setProperty("--form-scale", Math.min(factor, 3.4).toFixed(2));
+  root.style.setProperty("--form-scale-base", Math.min(factor, 3.4).toFixed(2));
   root.classList.add("small-screen");
 }
 
