@@ -1,10 +1,16 @@
 :root{
   --bg:#D8D0C4; --ink:#2A2622; --text:#3A332B; --muted:#6A5F52;
   --accent:#B5652F; --form-scale:1; --panel:#EDE6DA; --border:#C9AC8E; --faded:#B9AE9D;
+  --boom-burst:2400ms;  /* bang plus cool-down; the bang itself is the first ~quarter */
+  --boom-peak:1.74;     /* how far the blast swells at detonation; it always settles back to 1 */
+  --boom-offset:544px;  /* distance from centre to each blast; smaller pulls them inward */
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);
-     font-family:"Avenir Next",Arial,sans-serif;line-height:1.45}
+     font-family:"Avenir Next",Arial,sans-serif;line-height:1.45;
+     /* The blasts now sit outside .cover and swell past the page edges, so the
+        page itself does the horizontal cropping the cover used to do. */
+     overflow-x:hidden}
 main{max-width:560px;margin:0 auto;padding:0 20px 60px}
 
 /* Sits on top of the corner bang, so it needs its own chip to stay readable. */
@@ -38,13 +44,47 @@ main{max-width:560px;margin:0 auto;padding:0 20px 60px}
    (grid 1 leans -11deg, grid 3 leans +9deg). The right one is mirrored so the
    pair are not identical twins. The offsets are measured from the centre, so
    both stay clear of the letters at every width. */
-.deco-boom{width:384px}
+/* Detonate on load, then keep smouldering. Both animations use the standalone
+   scale/rotate properties, which apply ON TOP OF `transform`, so each blast keeps
+   the tilt and mirror set below instead of having it overwritten per keyframe.
+   z-index puts the fire in front of everything on the page, including the intro
+   text and the grids, so the blast reads as being nearer the viewer. */
+.deco-boom{width:384px;z-index:10;
+  animation:boom-burst var(--boom-burst) ease-out both,
+            boom-glow 4.5s ease-in-out infinite}
+/* One animation covers the whole arc: a fast bang that overshoots well past full
+   size, then a long cool-down that drifts back down and lands exactly on the
+   glow's resting values, so the handover to the loop is invisible. */
+@keyframes boom-burst{
+  0%   {scale:.15; opacity:0; rotate:var(--boom-drift);       filter:brightness(1.75) saturate(1.5)}
+  8%   {opacity:1}
+  22%  {scale:var(--boom-peak); rotate:var(--boom-drift);     filter:brightness(1.5)  saturate(1.4)}
+  45%  {scale:1.14;                                           filter:brightness(1.26) saturate(1.22)}
+  70%  {scale:1.05;                                           filter:brightness(1.12) saturate(1.1)}
+  100% {scale:1;   opacity:1; rotate:0deg;                    filter:brightness(1)    saturate(1)}
+}
+/* Uneven stops rather than a clean sine, so the smoulder flickers instead of
+   pulsing mechanically. */
+@keyframes boom-glow{
+  0%,100%{scale:1;     rotate:0deg;    filter:brightness(1)    saturate(1)}
+  30%    {scale:1.03;  rotate:.4deg;   filter:brightness(1.14) saturate(1.12)}
+  55%    {scale:1.008; rotate:-.2deg;  filter:brightness(1.04) saturate(1.03)}
+  78%    {scale:1.022; rotate:.25deg;  filter:brightness(1.1)  saturate(1.08)}
+}
 /* Offsets grow with the width, so the blasts stay clear of the letters. */
-.deco-boom-l{top:34px;left:calc(50% - 544px);transform:rotate(8deg)}
+/* Drift direction and the stagger differ per side, so the two read as separate
+   bangs and never breathe in sync afterwards. */
+.deco-boom-l{top:34px;left:calc(50% - var(--boom-offset));transform:rotate(8deg);
+  --boom-drift:3deg;animation-delay:0ms,var(--boom-burst)}
 /* Tilted right-side-up. The steeper angle swings the low corner ~23px further
    down, so top drops 94 -> 71 to keep that corner at the same height as before,
    roughly level with where the rainbow's mask fades out. */
-.deco-boom-r{top:71px;right:calc(50% - 544px);transform:rotate(-16deg) scaleX(-1)}
+.deco-boom-r{top:71px;right:calc(50% - var(--boom-offset));transform:rotate(-16deg) scaleX(-1);
+  /* Glow picks up the instant this side's bang ends (250ms later than the left).
+     The two stay out of phase through a different loop length, not a later start,
+     which would leave the blast frozen in between. */
+  --boom-drift:-3deg;animation-delay:250ms,calc(var(--boom-burst) + 250ms);
+  animation-duration:var(--boom-burst),5300ms}
 /* Cover text paints over the decoration, plus a halo in the page colour so the
    letters keep their contrast where they cross a photo. Invisible against the
    plain background. */
@@ -154,7 +194,11 @@ main{max-width:560px;margin:0 auto;padding:0 20px 60px}
 /* Straighten on hover, so a curious mouse gets a readable grid. Pointer devices
    only: on a phone :hover latches after a tap and the grid stays crooked-fixed. */
 @media(hover:hover){.grids img:hover{transform:rotate(0) scale(1.03)}}
-@media(prefers-reduced-motion:reduce){.grids img{transition:none}}
+@media(prefers-reduced-motion:reduce){
+  .grids img{transition:none}
+  /* Blasts render in their final state: no detonation, no smoulder. */
+  .deco-boom{animation:none}
+}
 
 .panel{background:var(--panel);border:1.5px solid var(--border);
   border-radius:14px;padding:20px 22px 26px;margin-top:30px}
@@ -186,6 +230,12 @@ button[type=submit]:disabled{opacity:.6;cursor:wait}
    The panel also breaks out of the 560px text column: at 520px it would render
    only ~180px wide on a phone, which no font size can make typeable. */
 .small-screen{--form-scale:var(--form-scale-base, 1)}
+/* The blast peaks twice as large on a phone, where the whole page is shrunk to fit
+   and a laptop-sized detonation reads as a flicker in the corner. It still settles
+   back to the same resting size. */
+.small-screen{--boom-peak:2.9;--boom-offset:435px}
+/* Left blast sits a touch lower here, so the pair are not level on the phone. */
+.small-screen .deco-boom-l{top:46px}
 /* The signup section runs 20% below that: still typeable, less dominant. Scoped
    as a variable so everything in it scales together, and so the shared
    photos-caption below keeps the page-wide factor. Width and offset shrink with

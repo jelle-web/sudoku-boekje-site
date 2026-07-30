@@ -32,20 +32,32 @@ from CSS transforms and filters applied to that one frame.
 
 ## Choreography
 
+Revised during implementation: the first build was too small and its smoulder was
+too faint to notice, so the bang got bigger and the cool-down got much longer.
+
 | | |
 |---|---|
 | Left blast | starts at 0ms |
-| Right blast | starts at 150ms |
-| Burst duration | 900ms (`--boom-burst`) |
-| Scale curve | 0.2 -> 1.12 -> 1.0 |
-| Opacity | 0 -> 1, reaching full early in the curve |
-| Flash | brightness and saturation raised at the front of the curve, decaying to normal as it settles |
-| Rotation drift | 1-2 degrees during the burst, opposite directions per side |
-| Idle glow | 5s loop, brightness +~5%, scale +~1.5%, ease-in-out, infinite |
-| Glow offset | the two sides are 2.5s apart so they never breathe in sync |
+| Right blast | starts at 250ms |
+| Burst duration | 2400ms (`--boom-burst`), covering bang **and** cool-down |
+| Bang peak | at 22% of that, so ~530ms in |
+| Scale curve | 0.15 -> `--boom-peak` -> 1.14 -> 1.05 -> 1.0 |
+| `--boom-peak` | 1.74 on laptop, 2.9 on phone, where the shrunk page makes a laptop-sized blast read as a flicker |
+| Resting size | always back to `width: 384px` in its original spot; only the detonation is larger |
+| Opacity | 0 -> 1, full by 8% |
+| Flash | brightness 1.75 and saturation 1.5 at detonation, decaying to neutral by the end |
+| Rotation drift | 3 degrees during the burst, opposite directions per side |
+| Idle glow | brightness +14%, scale +3%, plus a fraction of a degree of wobble |
+| Glow period | 4.5s left, 5.3s right |
 
-The idle glow must pick up from the burst's end state so there is no visible jump
-between the two animations.
+The burst's final keyframe lands exactly on the glow's resting values, so the
+handover is invisible.
+
+**Each side's glow starts the instant that side's own burst ends** (2400ms left,
+2650ms right). The two stay out of phase through their different loop *lengths*,
+not through a later start. An earlier version delayed the right glow to 4850ms to
+desynchronise them, which left that blast frozen for 2.2 seconds; a Codex review
+caught it.
 
 ## How it is built
 
@@ -64,8 +76,39 @@ Support: individual transform properties landed in Safari 14.1 and Chrome 104, s
 2022 onward. On anything older the blasts simply appear in place, un-animated,
 which is the current behaviour.
 
-Files touched: `style.css` only, next to the existing `.deco-boom` rules.
-`--boom-burst` is declared on `:root` beside the other custom properties.
+### The fire has to be the top layer, which needed an HTML change
+
+The design originally promised no HTML changes. That did not survive: the blasts
+were children of `.cover`, which has `overflow: hidden`, so they were **clipped at
+the cover's boundary** and no `z-index` could ever lift them over the intro text or
+the grids. Clipping beats stacking.
+
+So both blast `<img>` tags moved out of `<header class="cover">` to sit directly
+under `<body>`, before the header. They are absolutely positioned from the page's
+top and horizontal centre, which puts them in the same place as before. `.deco-boom`
+then takes `z-index: 10`, above the intro text (`z-index: 1`) and the grids, and
+`body` takes `overflow-x: hidden` so the page does the horizontal cropping the
+cover used to do.
+
+The rainbow stays inside `.cover` and keeps its crop, so its masked fade is
+unaffected.
+
+Consequence, accepted deliberately: the fire also paints over the wordmark, so at
+peak the bang washes across "SUDOKU". Bumping `.cover > div` above `z-index: 10`
+would reverse that if it ever reads badly.
+
+### Tunable knobs, all on `:root`
+
+| variable | default | what it does |
+|---|---|---|
+| `--boom-burst` | 2400ms | whole arc, bang plus cool-down |
+| `--boom-peak` | 1.74 | how far the blast swells; phone overrides to 2.9 |
+| `--boom-offset` | 544px | distance from centre to each blast; phone overrides to 435px |
+
+Phone-only extras under `.small-screen`: the offset above, plus the left blast
+sitting at `top: 46px` instead of 34px so the pair are not level.
+
+Files touched: `style.css`, `index.html`, `en/index.html`.
 
 ## Reduced motion
 
