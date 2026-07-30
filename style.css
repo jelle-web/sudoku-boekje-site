@@ -24,19 +24,33 @@ main{max-width:560px;margin:0 auto;padding:0 20px 60px}
    rainbow keeps its sky (a rainbow cannot be cut out — it IS sky) and instead has
    its edges faded so it melts into the page. */
 .deco{position:absolute;pointer-events:none;z-index:0;height:auto}
-/* Angles deliberately oppose the grid below each one (grid 1 leans -11deg, grid 3
-   leans +9deg), so the cover and the taster lean against each other. */
-.deco-rainbow{width:360px;top:2px;left:96px;transform:rotate(9deg)}
-.deco-boom{width:280px;top:-24px;right:88px;transform:rotate(-8deg)}
+/* Rainbow: large and deliberately faint, centred behind the wordmark. */
+.deco-rainbow{width:820px;left:50%;top:-56px;
+  transform:translateX(-50%) rotate(2deg);opacity:.5;filter:blur(1px);
+  /* The cover crops whatever hangs below it, which would cut the photo's fade
+     mid-way and leave a hard seam. This dissolves the bottom first. */
+  -webkit-mask-image:linear-gradient(to bottom,#000 48%,transparent 86%);
+  mask-image:linear-gradient(to bottom,#000 48%,transparent 86%)}
+/* A blast either side of the title, each leaning against the grid below it
+   (grid 1 leans -11deg, grid 3 leans +9deg). The right one is mirrored so the
+   pair are not identical twins. The offsets are measured from the centre, so
+   both stay clear of the letters at every width. */
+.deco-boom{width:320px}
+.deco-boom-l{top:-34px;left:calc(50% - 480px);transform:rotate(8deg)}
+.deco-boom-r{top:-46px;right:calc(50% - 480px);transform:rotate(-8deg) scaleX(-1)}
 /* Cover text paints over the decoration, plus a halo in the page colour so the
    letters keep their contrast where they cross a photo. Invisible against the
    plain background. */
 .cover > div{position:relative;z-index:1;
   text-shadow:0 0 12px var(--bg),0 0 6px var(--bg),0 0 2px var(--bg)}
 /* A phone cover is nearly all wordmark, so they shrink and hug the edges more. */
+/* No room to flank a full-width wordmark on a phone, so the blasts tuck into the
+   top corners and the rainbow still sits centred behind. */
 @media(max-width:560px){
-  .deco-rainbow{width:210px;top:0;left:-42px;transform:rotate(7deg)}
-  .deco-boom{width:160px;top:-26px;right:-34px;transform:rotate(-7deg)}
+  .deco-rainbow{width:470px;top:-18px;opacity:.45}
+  .deco-boom{width:165px}
+  .deco-boom-l{top:-40px;left:-62px}
+  .deco-boom-r{top:-44px;right:-58px}
 }
 .cv-van{font-size:16px;color:var(--muted);letter-spacing:5px;
         text-transform:uppercase;font-weight:700;margin-bottom:4px}
