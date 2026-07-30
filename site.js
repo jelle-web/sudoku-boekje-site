@@ -7,7 +7,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwARIYFsINER5Bg7Hqwq
 // Detection uses the device's SHORT edge, which does not change when the phone is
 // rotated — screen.width alone reports ~915 on an Android in landscape and would
 // wrongly look like a desktop.
-const VIEWPORT_WIDTH = 1120;
+const VIEWPORT_WIDTH = 900;
 
 function sizeFormForScreen() {
   const root = document.documentElement;

@@ -41,7 +41,10 @@ main{max-width:560px;margin:0 auto;padding:0 20px 60px}
 .deco-boom{width:384px}
 /* Offsets grow with the width, so the blasts stay clear of the letters. */
 .deco-boom-l{top:34px;left:calc(50% - 544px);transform:rotate(8deg)}
-.deco-boom-r{top:22px;right:calc(50% - 544px);transform:rotate(-8deg) scaleX(-1)}
+/* Tilted right-side-up. The steeper angle swings the low corner ~23px further
+   down, so top drops 94 -> 71 to keep that corner at the same height as before,
+   roughly level with where the rainbow's mask fades out. */
+.deco-boom-r{top:71px;right:calc(50% - 544px);transform:rotate(-16deg) scaleX(-1)}
 /* Cover text paints over the decoration, plus a halo in the page colour so the
    letters keep their contrast where they cross a photo. Invisible against the
    plain background. */
@@ -66,7 +69,6 @@ main{max-width:560px;margin:0 auto;padding:0 20px 60px}
 .cv-icons img{width:26px;height:26px}
 
 .intro p{font-size:16px;margin:0 0 12px;text-align:center}
-.intro .signoff{margin-top:18px}
 
 .polaroid{margin:34px auto;width:min(240px,70%);background:#fff;
   padding:10px 10px 8px;box-shadow:0 6px 18px rgba(42,38,34,.25);
@@ -114,9 +116,25 @@ main{max-width:560px;margin:0 auto;padding:0 20px 60px}
    ~300px of empty margin either side. Tuck the grids into that margin around the
    intro, turned harder, overlapping the column edge but stopping inside its
    padding so no letters end up on top of a grid. The heading goes away since
-   they are decoration here, not a gallery. A phone has no margin to give, so it
-   keeps the stacked version above. 1120px is the width where the outermost
-   rotated corner still clears the viewport edge. */
+   they are decoration here, not a gallery. 1120px is the width where the
+   outermost rotated corner still clears the viewport edge.
+   Phones get this layout too, and that is deliberate: the fixed 1120px viewport
+   means a phone always satisfies this test, so it sees the same scattered
+   arrangement shrunk down. Do not gate this on pointer or hover capability. */
+/* Same idea at the phone's 900px viewport, where only ~170px of margin exists
+   either side: smaller grids, pulled closer. The 1120 block below overrides these
+   with the roomier laptop values. */
+@media(min-width:900px){
+  main{position:relative}
+  .taster h2{display:none}
+  .taster{margin-top:0}
+  .grids{display:block;padding:0;height:0}
+  .grids img{position:absolute;width:145px;transition:transform .3s ease}
+  .grids img:nth-child(1){top:-8px;   left:-140px; transform:rotate(-11deg)}
+  .grids img:nth-child(2){top:250px;  left:-150px; transform:rotate(7deg)}
+  .grids img:nth-child(3){top:40px;   right:-145px;transform:rotate(9deg)}
+  .grids img:nth-child(4){top:298px;  right:-135px;transform:rotate(-8deg)}
+}
 @media(min-width:1120px){
   main{position:relative}
   /* Slightly narrower pair here, so the tilted photo corners keep clear of the
@@ -167,7 +185,7 @@ button[type=submit]:disabled{opacity:.6;cursor:wait}
    times that factor, so portrait, landscape and every screen size land the same.
    The panel also breaks out of the 560px text column: at 520px it would render
    only ~180px wide on a phone, which no font size can make typeable. */
-.small-screen .signup{width:1060px;margin-left:-270px;
+.small-screen .signup{width:860px;margin-left:-170px;
   padding:calc(20px * var(--form-scale)) calc(22px * var(--form-scale))
           calc(26px * var(--form-scale));
   border-radius:calc(14px * var(--form-scale))}
