@@ -25,11 +25,11 @@ main{max-width:560px;margin:0 auto;padding:0 20px 60px}
    its edges faded so it melts into the page. */
 .deco{position:absolute;pointer-events:none;z-index:0;height:auto}
 /* Rainbow: large and deliberately faint, centred behind the wordmark. */
-/* The arc's apex sits at ~41% of the photo, not 50%. Shifting by that as a
+/* The arc's apex sits at ~41.5% of the photo, not 50%. Shifting by that as a
    percentage of the element's own width (rather than a pixel nudge) keeps the arc
    on the centre line at ANY width, mobile included. */
 .deco-rainbow{width:820px;left:50%;top:-30px;
-  transform:translateX(-41%) rotate(2deg);opacity:.55;filter:blur(1px);
+  transform:translateX(-41.5%) rotate(2deg);opacity:.55;filter:blur(1px);
   /* The cover crops whatever hangs below it, which would cut the photo's fade
      mid-way and leave a hard seam. This dissolves the bottom first. */
   -webkit-mask-image:linear-gradient(to bottom,#000 48%,transparent 86%);
