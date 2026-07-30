@@ -1,12 +1,28 @@
 // Standalone Apps Script web app; it addresses the sheet by id (see README).
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwARIYFsINER5Bg7HqwqnqjzZCW4qQkTIOfpDg4afc7lTtiQJa2E4iYxcX3KEpHlqsw/exec";
 
-// The page uses a fixed 1120px viewport so phones get the laptop layout, which
-// means a phone shrinks everything to about a third. Readable enough for text you
-// can pinch-zoom, too small to tap a form. Flagging small physical screens lets
-// the CSS enlarge only the form. screen.width is the device, not the window, so a
-// narrow window on a big monitor is correctly left alone.
-if (screen.width <= 600) document.documentElement.classList.add("small-screen");
+// The page declares a fixed 1120px viewport so phones get the laptop layout, which
+// means a phone shrinks the whole page. Text can be pinch-zoomed, but the form has
+// to stay usable, so hand the CSS the actual shrink factor to size it back up.
+// Detection uses the device's SHORT edge, which does not change when the phone is
+// rotated — screen.width alone reports ~915 on an Android in landscape and would
+// wrongly look like a desktop.
+const VIEWPORT_WIDTH = 1120;
+
+function sizeFormForScreen() {
+  const root = document.documentElement;
+  if (Math.min(screen.width, screen.height) > 600) {
+    root.classList.remove("small-screen");
+    return;
+  }
+  const factor = VIEWPORT_WIDTH / Math.max(screen.width, 320);
+  root.style.setProperty("--form-scale", Math.min(factor, 3.4).toFixed(2));
+  root.classList.add("small-screen");
+}
+
+sizeFormForScreen();
+// Rotating changes the shrink factor, and the value is stale until we recompute.
+addEventListener("orientationchange", () => setTimeout(sizeFormForScreen, 250));
 
 const form = document.getElementById("interest-form");
 const address = document.getElementById("address-fields");
